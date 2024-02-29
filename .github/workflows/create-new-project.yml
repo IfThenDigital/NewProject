@@ -1,0 +1,28 @@
+name: Create New Repository from Template
+
+on:
+  workflow_dispatch:
+    inputs:
+      projectName:
+        description: 'Project Name'
+        required: true
+        default: 'NewProject'
+
+jobs:
+  create-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create new repository from template using GitHub REST API
+        env:
+          PAT: ${{ secrets.CLONING_PAT}}
+        run: |
+          repo_name=${{ github.event.inputs.projectName }}
+          owner="${{ github.actor }}"
+          url="https://api.github.com/repos/IfThenDigital/wordpress-prime/generate"
+          response=$(curl -X POST $url \
+            -H "Authorization: token $PAT" \
+            -H "Accept: application/vnd.github.baptiste-preview+json" \
+            -d '{"owner": "'"$owner"'", "name": "'"$repo_name"'", "private": false}')
+          
+          new_repo_url=$(echo $response | jq -r '.clone_url')
+          echo "New repository created at $new_repo_url"

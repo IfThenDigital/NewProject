@@ -1,0 +1,27 @@
+// Dependencies
+// This file imports other sass files that contain
+// variables or mixins from both this theme and 3rd
+// parties like Foundation. This file can then be imported
+// into component files, so that they can become namespaced
+// and still have access to global mixins, vars, etc.
+
+// Required Bootstrap
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+// Optional Bootstrap
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/helpers/visually-hidden";
+
+// Sass variables, mixins, maps, etc
+@import "settings";
+
+// extends, functions, and mixins
+@import "utilities";
+
+// Typography
+@import "fonts";
+@import "typography";

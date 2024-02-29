@@ -1,0 +1,31 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - overrides
+// Variable overrides for Bootstrap
+// See node_modules/bootstrap/scss/_variables.scss
+// for list of available variables
+
+// colors
+$primary: #000;
+$secondary: #fff;
+$table-border-color: #2e2925;
+$border-color: #2e2925;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1440px
+);
+
+$container-max-widths: (
+  sm: 100%,
+  md: 100%,
+  lg: 100%,
+  xl: 1440px
+);
+
+$grid-columns: 12;
+$grid-gutter-width: 40px;
+$spacer: 20px;

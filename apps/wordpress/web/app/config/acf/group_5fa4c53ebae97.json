@@ -1,0 +1,53 @@
+{
+    "key": "group_5fa4c53ebae97",
+    "title": "Custom HTML",
+    "fields": [
+        {
+            "key": "field_5fa4c65b06a3c",
+            "label": "HTML",
+            "name": "html",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/html"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "is_acf_component": 0,
+    "acf_component_defaults": {
+        "repeatable": "0",
+        "min": "",
+        "max": "",
+        "layout": "block",
+        "button_label": "",
+        "appearances": ""
+    },
+    "modified": 1608065455,
+    "local_file": "\/var\/www\/ahc\/web\/app\/plugins\/it-acf\/..\/..\/config\/acf\/group_5fa4c53ebae97.json"
+}

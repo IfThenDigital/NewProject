@@ -1,0 +1,15 @@
+# Ignore artifacts:
+build
+coverage
+dist
+node_modules
+
+# Nuxt dev/build outputs
+.output
+.nuxt
+.nitro
+.cache
+
+# Storybook
+storybook-static
+/web/storybook

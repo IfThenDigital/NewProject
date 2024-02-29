@@ -1,0 +1,42 @@
+{#
+/**
+ * A helper template for outputting a picture element.
+ *
+ * It outputs images set with the following keys in the `data` array for different breakpoints:
+ *  - default
+ *  - xsmall
+ *  - small
+ *  - medium
+ *  - large
+ *  - xlarge
+ *
+ * And a key for alt text:
+ *  - alt_text
+ *
+ * Breakpoint points are defined here, and are based on the CSS breakpoints.
+ */
+#}
+
+<picture>
+  {% if xsmall %}
+    <source srcset="{{ xsmall }}" media="(max-width: 575px)" />
+  {% endif %}
+
+  {% if small %}
+    <source srcset="{{ small }}" media="(min-width: 576px)" />
+  {% endif %}
+
+  {% if medium %}
+    <source srcset="{{ medium }}" media="(min-width: 768px)" />
+  {% endif %}
+
+  {% if large %}
+    <source srcset="{{ large }}" media="(min-width: 992px)" />
+  {% endif %}
+
+  {% if xlarge %}
+    <source srcset="{{ xlarge }}" media="(min-width: 1200px)" />
+  {% endif %}
+
+  <img src="{{ default }}" alt="{{ alt_text }}" />
+</picture>

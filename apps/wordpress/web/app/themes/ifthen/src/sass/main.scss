@@ -1,0 +1,13 @@
+/* stylelint-disable max-empty-lines  */
+
+// - - - - - - - - - - - - - - - - - - -
+// - - libs
+// add 3rd party libraries here.
+// be sure to load them after the variable overrides file
+@import "overrides";
+
+// - - - - - - - - - - - - - - - - - - -
+// - - main.scss
+// contains an import section for libs, global, and components, the inbox,
+// and a shame section for quick fixes and hacks.
+@import "dependencies";

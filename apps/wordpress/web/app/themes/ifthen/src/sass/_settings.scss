@@ -1,0 +1,52 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - settings
+// global maps and variables
+
+// ----- Brand Colors ----- //
+
+// ----- Site Defaults ----- //
+$color-primary: $black;
+$color-secondary: $white;
+$color-tertiary: $color-primary;
+$white: #fff;
+$black: #000;
+
+// ----- Color Pallete ----- //
+// Text
+$color-body: $color-primary;
+$color-heading: $color-primary;
+$color-footer: $color-primary;
+$color-paragraph: $color-primary;
+
+// Links
+$color-link: $color-primary;
+$color-link-hover: $color-secondary;
+$color-link-underline: $color-secondary;
+
+// Backgrounds
+$bg-primary: $white;
+$bg-secondary: $white;
+$bg-tertiary: $white;
+
+// ----- Fonts ----- //
+$font-size-large: 2.25rem; // 36px
+$font-size-medium: 1.25rem; // 20px
+$font-size-small: 1.125rem; // 18px
+$font-size-default: 1rem; // 16px
+
+// ----- Layout ----- //
+$default-max-width: 1440px;
+$default-content-width: 1440px;
+$spacing-large: 80;
+$spacing-medium: 40;
+$spacing-small: 30;
+
+// ----- Borders ----- //
+$border-default: 1px solid $color-primary;
+
+// ----- Global z-index management ----- //
+$zindex-body: 5;
+$zindex-hamburger: 20;
+$zindex-masthead: 1000;
+$zindex-hero: 500;
+$zindex-zoom: $zindex-masthead + 1;

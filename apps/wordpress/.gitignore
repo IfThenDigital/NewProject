@@ -1,0 +1,52 @@
+# Application
+web/app/plugins/*
+!web/app/plugins/.gitkeep
+web/app/upgrade
+web/app/uploads/*
+!web/app/uploads/.gitkeep
+web/app/db.php
+
+
+# Custom Plugins
+!web/app/plugins/it-acf
+!web/app/plugins/it-acf-blocks
+!web/app/plugins/it-core
+!web/app/plugins/it-pantheon
+!web/app/plugins/it-security
+!web/app/plugins/it-seo
+!web/app/plugins/it-timber
+!web/app/plugins/it-utility
+
+# Contrib Plugins
+!web/app/plugins/advanced-custom-fields-pro
+!web/app/plugins/advanced-custom-fields-component_field
+
+# WordPress
+web/wp
+web/.htaccess
+
+# Builds
+/deploy
+
+# Logs
+*.log
+
+# Dotenv
+.env
+.env.*
+!config/environments/env/.env.*
+
+# Composer
+/vendor
+
+# WP-CLI
+wp-cli.local.yml
+
+# IDE
+.idea
+
+# Vagrant
+.vagrant
+
+# Misc
+.DS_Store

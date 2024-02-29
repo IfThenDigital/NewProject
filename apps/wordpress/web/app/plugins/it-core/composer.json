@@ -1,0 +1,8 @@
+{
+    "name": "ifthen/it-core",
+    "description": "Enhancements to core Wordpress functionality.",
+    "version": "1.0.0",
+    "type": "wordpress-plugin",
+    "minimum-stability": "dev",
+    "require": {}
+}

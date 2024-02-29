@@ -1,0 +1,461 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - utilities
+// global extends, mixins, functions, and utility classes
+
+// - - - - - - - - - - - - - - - - - - -
+// - - extends
+
+// - - - - - - - - - - - - - - - - - - -
+// - - mixins
+
+// - - - - - - - - - - - - - - - - - - -
+// - - functions
+
+@function rem-calc($px) {
+  @return $px / 16 * 1rem;
+}
+
+@function padding($breakpoint: small) {
+  @if ($breakpoint == medium) {
+    @return 30px;
+  } @else {
+    @return 20px;
+  }
+}
+
+@function aspect-ratio-calc($width, $height) {
+  @return ($height / $width) * 100%;
+}
+
+/// Remove the unit of a length
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+// Convert pixel value to unitless
+@function line-height($pixel) {
+  @return strip-unit($pixel) / 16;
+}
+
+// - - - - - - - - - - - - - - - - - - -
+// - - utilities
+// utility classes should be prefixed with 'u-'
+
+[v-cloak] {
+  display: none;
+}
+
+// List styles
+// Include on ul element (@include list();) default is unstyled
+// Width of li (if needed) should be declared on li elements
+//
+@mixin list($style: unstyled) {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  @if $style == inline {
+    > li {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  } @else if $style == numeric {
+    list-style: decimal;
+    margin-bottom: 20px;
+    padding-left: 40px;
+
+    > li:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  } @else if $style == dash {
+    text-indent: -1.85rem;
+    padding-left: 1.85rem;
+    
+    li::before {
+      content: '\2013'; //ndash
+      margin-right: 1rem;
+    }
+  } @else {
+    > li {
+      display: block;
+    }
+    > li::before {
+      display: none;
+    }
+  }
+}
+
+// Returns square root of a given number
+// @param {number} $r
+// @return {number} - square root
+//
+@function sqrt($r) {
+  $x0: 1;
+  $x1: $x0;
+
+  @for $i from 1 through 10 {
+    $x1: $x0 - ($x0 * $x0 - abs($r)) / (2 * $x0);
+    $x0: $x1;
+  }
+
+  @return $x1;
+}
+
+// Caret
+// for use psuedo element -
+// does not include any positioning
+//
+@mixin caret($direction: down, $size: 14, $stroke: 2, $units: px) {
+  @if not index(up right down left, $direction) {
+    @error "Direction must be either `up`, `right`, `down` or `left`.";
+  }
+  $squared: $size * $size; //not using something more fancy because it's only to a power of 2 :)
+  $hypotenuse: sqrt(
+    $squared + $squared
+  ); //square root of $size*$size + $size*$size
+  content: "";
+  display: inline-block;
+  width: unquote("#{$size}#{$units}");
+  height: unquote("#{$size}#{$units}");
+  border-top: unquote("#{$stroke}#{$units}") solid;
+  border-right: unquote("#{$stroke}#{$units}") solid;
+  @if $direction == up {
+    transform: rotate(-45deg);
+  } @else if $direction == right {
+    transform: rotate(45deg);
+  }
+  @if $direction == down {
+    transform: rotate(135deg);
+  } @else if $direction == left {
+    transform: rotate(-135deg);
+  }
+}
+
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+// CSS image replacement
+@mixin text-hide() {
+  // stylelint-disable-next-line font-family-no-missing-generic-family-keyword
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+// Placeholder text for forms
+@mixin placeholder($color: $black, $size: inherit, $weight: inherit, $spacing: inherit) {
+  // Firefox
+  &::-moz-placeholder {
+    color: $color;
+    font-size: $size;
+    font-weight: $weight;
+    letter-spacing: $spacing;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    font-size: $size;
+    font-weight: $weight;
+    letter-spacing: $spacing;
+  } // Internet Explorer 10+
+  &::-webkit-input-placeholder {
+    color: $color;
+    font-size: $size;
+    font-weight: $weight;
+    letter-spacing: $spacing;
+    padding-top: 3px;
+  } // Safari and Chrome
+
+  &:focus {
+    // Firefox
+    &::-moz-placeholder {
+      opacity: 0.3;
+    }
+    &:-ms-input-placeholder {
+      opacity: 0.3;
+    } // Internet Explorer 10+
+    &::-webkit-input-placeholder {
+      opacity: 0.3;
+    } // Safari and Chrome
+  }
+}
+
+@mixin file-input {
+  &::-webkit-file-upload-button { //chrome and safari
+    @content;
+  }
+  &::-ms-browse {
+    @content;
+  }
+  &::file-selector-button { //firefox - not currently working, may work with version 82 (https://developer.mozilla.org/en-US/docs/Web/CSS/::file-selector-button)
+    @content;
+  }
+}
+
+// Skip Nav link
+// Default is position: absolute. Does not include
+// colors, padding, etc.
+@mixin skip-link($position: absolute) {
+  height: 1px;
+  left: -1000px;
+  overflow: hidden;
+  position: absolute;
+  top: -1000px;
+  width: 1px;
+  z-index: 1000;
+
+  &:focus,
+  &:active {
+    height: auto;
+    left: 0;
+    overflow: visible;
+    top: 0;
+    width: auto;
+
+    @if $position != absolute {
+      position: $position;
+    }
+  }
+}
+
+// Images with specific ratios
+@mixin proportional($padding: 56.25%, $el: img) {
+  overflow: hidden;
+  height: 0;
+  padding-top: $padding;
+  position: relative;
+
+  #{ $el } {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+    object-position: center;
+  }
+}
+
+// stretch a single link to make
+// its whole parent clickable. Add as
+// an ::after on the link
+// https://inclusive-components.design/cards/#thepseudocontenttrick
+@mixin link-cover {
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@mixin top-rule() {
+  &:not(.no-rule)::before {
+    content: "";
+    display: block;
+    border-top: 5px solid $primary-text-color;
+    margin-bottom: rem-calc(13);
+    width: rem-calc(100);
+
+    .blackout & {
+      border-color: #fff;
+    }
+
+    @include media-breakpoint-up(md) {
+      border-top: 8px solid $primary-text-color;
+      margin-bottom: rem-calc(20);
+      width: rem-calc(140);
+    }
+  }
+}
+
+@mixin spacers(
+  $small: $spacing-small,
+  $medium: $spacing-medium,
+  $large: $spacing-medium
+) {
+  margin-bottom: rem-calc($small);
+
+  @include media-breakpoint-up(md) {
+    margin-bottom: rem-calc($medium);
+  }
+
+  @include media-breakpoint-up(lg) {
+    margin-bottom: rem-calc($large);
+  }
+}
+
+// expand element to full-width breaking
+// outside its container
+@mixin expand() {
+  margin: 0 calc(50% - 50vw);
+}
+
+@mixin link-border($height: 4, $persistent: false) {
+  text-decoration: none;
+
+  // underline is always visible
+  @if $persistent {
+    border-bottom: #{$height}px solid $color-secondary;
+
+    &:hover,
+    &:focus {
+      border-bottom: #{$height}px solid transparent;
+      text-decoration: none;
+    }
+  } @else {
+    border-bottom: #{$height}px solid transparent;
+
+    &:hover,
+    &:focus {
+      border-bottom: #{$height}px solid $color-secondary;
+      text-decoration: none;
+    }
+  }
+}
+
+/**
+ * Displays a play button inside of the current selector.
+ */
+@mixin play-button($size-sm: 51, $size-lg: 282, $border-color: $white) {
+  height: rem-calc($size-sm);
+  width: rem-calc($size-sm);
+  position: relative;
+
+  &::after {
+    height: 100%;
+    width: 100%;
+    content: ' ';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FFF' stroke-width='2'%3E%3Cg%3E%3Cg%3E%3Cpath d='M390 192.236L413.382 239h-46.764L390 192.236z' transform='translate(-705 -1330) translate(20 1046) translate(320 94) rotate(90 390 215)'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 66% 50%;
+    background-size: 50% auto;
+    border: 1px solid $border-color;
+    border-radius: 50%;
+  }
+  
+  @include media-breakpoint-up(md) {
+    height: rem-calc($size-lg);
+    width: rem-calc($size-lg);
+    
+    &::after {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 108 108'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FFF' stroke-width='2'%3E%3Cg%3E%3Cpath d='M740 427.236L792.382 532H687.618L740 427.236z' transform='translate(-686 -2223) translate(0 1798) rotate(90 740 479)'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+      background-size: 40% auto;
+      border: 2px solid $border-color;
+    }
+  }
+  
+}
+
+@mixin focus-outline() {
+  box-shadow: none;
+  outline: 2px solid #757575;
+  outline-offset: 3px;
+}
+
+// https://css-tricks.com/full-width-containers-limited-width-parents/
+@mixin wide-content() {
+  max-width: $default-max-width;
+  margin-left: auto;
+  margin-right: auto;
+
+  .content.container & {
+    margin-left: -$grid-gutter-width / 2;
+    margin-right: -$grid-gutter-width / 2;
+  }
+
+  .grid-content.container &,
+  .edit-post-visual-editor__post-title-wrapper + div & {
+    margin-left: -$grid-gutter-width / 2;
+    margin-right: -$grid-gutter-width / 2;
+
+    @include media-breakpoint-up(md) {
+      // the main content area defined for grid-content is 54.28%
+      // (100 - 54.28) / 2 = 22.86
+      // 22.86 / 54.28 * 100% = 42.11495946941783%
+      margin-left: calc(-42.11495946941783% + #{-$grid-gutter-width/2});
+      margin-right: calc(-42.11495946941783% + #{-$grid-gutter-width/2});
+    }
+  }
+}
+
+//to add proper spacing on full width components in page/post
+@mixin grid-spacing-bottom($margin-sm: 30, $margin-md: 70) {
+  .content__main &,
+  .edit-post-visual-editor__post-title-wrapper + div & {
+  	margin-bottom: rem-calc($margin-sm);
+  	
+  	@include media-breakpoint-up(md) {
+  	  margin-bottom: rem-calc($margin-md);
+  	}
+  }
+}
+
+// in last row of a dynamic grid
+// https://dockyard.com/blog/2019/04/16/css-selectors-for-the-entire-last-row-of-a-dynamic-grid
+// https://www.sassmeister.com/gist/07a4123ac28d17f8655a4372b8438835
+@mixin in-last-row($column-count: 1) {
+  &:nth-child(#{$column-count}n + 1):nth-last-child(-n + #{$column-count}),
+  &:nth-child(#{$column-count}n + 1):nth-last-child(-n + #{$column-count}) ~ & {
+    @content;
+  }
+}
+
+//close icon
+//assumes added to a html element like a span or div
+@mixin close-icon($size-sm: rem-calc(18), $size-lg: rem-calc(28), $break: md) {
+  display: block;
+  width: $size-sm;
+  height: $size-sm;
+  position: relative;
+  transform: rotate(45deg);
+  
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+    transition: 0.3s all ease-out;
+  }
+
+  &::before {
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+
+  &::after {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 1px;
+  }
+
+  @include media-breakpoint-up($break) {
+    width: $size-lg;
+    height: $size-lg;
+  }
+}

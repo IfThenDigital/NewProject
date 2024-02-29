@@ -1,0 +1,7 @@
+{
+    "name": "ifthen/wordpress-prime",
+    "version": "1.0.0",
+    "type": "project",
+    "minimum-stability": "dev",
+    "require": {}
+}

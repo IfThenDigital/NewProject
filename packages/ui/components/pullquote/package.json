@@ -1,0 +1,20 @@
+{
+  "name": "@ifthendigital/pullquote",
+  "version": "1.0.3",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@ifthendigital"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IfThenDigital/wordpress-prime.git",
+    "directory": "packages/ui/components/pullquote"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

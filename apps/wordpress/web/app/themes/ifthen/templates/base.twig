@@ -1,0 +1,26 @@
+{% block html_head_container %}
+
+	{% include 'html-header.twig' %}
+	{% block head %}
+	{% endblock %}
+	</head>
+{% endblock %}
+
+	<body class="{{ body_class }} {{ post.post_type }}-post-type" data-template="base.twig">
+
+		<div id="app">
+
+			<main role="main">
+				{% block content %}
+					No content for this page.
+				{% endblock %}
+			</main>
+
+		</div>
+		<!-- /#app -->
+
+		{{ function('wp_footer') }}
+
+		<script type="text/javascript" src="{{ site.theme.link }}/dist/app.js?cb={{ frontend.cb_js }}"></script>
+	</body>
+</html>

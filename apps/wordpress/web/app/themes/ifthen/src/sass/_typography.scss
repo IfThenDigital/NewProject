@@ -1,0 +1,121 @@
+// - - - - - - - - - - - - - - - - - - -
+// - - typography
+// global typography styles
+// typography classes should be prefixed with "t-"
+
+@mixin font-sans($weight: medium) {
+  font-style: normal;
+  font-family: Helvetica, Arial, sans-serif;
+
+  @if ($weight == bold) {
+    font-weight: 700;
+  } @else {
+    font-weight: 400;
+  }
+}
+
+@mixin font-sizes($mobile, $tablet, $desktop: null, $wide: null) {
+  font-size: #{rem-calc($mobile)};
+  $desktop: if($desktop, $desktop, $tablet);
+  $wide: if($wide, $wide, $desktop);
+
+  @include media-breakpoint-up(md) {
+    font-size: #{rem-calc($tablet)};
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: #{rem-calc($desktop)};
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: #{rem-calc($wide)};
+  }
+}
+
+@mixin line-height($mobile, $tablet, $desktop: null, $wide: null) {
+  line-height: #{rem-calc($mobile)};
+  $desktop: if($desktop, $desktop, $tablet);
+  $wide: if($wide, $wide, $desktop);
+
+  @include media-breakpoint-up(md) {
+    line-height: #{rem-calc($tablet)};
+  }
+
+  @include media-breakpoint-up(lg) {
+    line-height: #{rem-calc($desktop)};
+  }
+
+  @include media-breakpoint-up(xl) {
+    line-height: #{rem-calc($wide)};
+  }
+}
+
+// line-height: get-line-height(60px, 65px);
+@function get-line-height($font-size, $line-height) {
+  @return $line-height / $font-size;
+}
+
+// https://websemantics.uk/tools/responsive-font-calculator/
+//
+// fluid text with $min-font-size to $max-font-size from $min-breakpoint to $max-breakpoint
+// optionally specify different override font-sizes for the two endpoints
+@mixin fluid-type($min-font-size, $max-font-size, $min-breakpoint, $max-breakpoint, $min-font-size-override: null, $max-font-size-override: null) {
+  $min-window-size: map-get($grid-breakpoints, $min-breakpoint);
+  $max-window-size: map-get($grid-breakpoints, $max-breakpoint);
+  $min-font-size-rems: rem-calc($min-font-size);
+  $max-font-size-rems: rem-calc($max-font-size);
+  $font-size-difference: ($max-font-size - $min-font-size) * 1px;
+  $viewport-difference: $max-window-size - $min-window-size;
+
+  @if ($min-font-size-override) {
+    font-size: rem-calc($min-font-size-override);
+  } @else {
+    font-size: $min-font-size-rems;
+  }
+
+  @include media-breakpoint-up($min-breakpoint) {
+    font-size: calc(#{$min-font-size-rems} + ((1vw - #{$min-window-size / 100}) * #{100 * $font-size-difference / $viewport-difference}));
+    min-height: 0vw;
+  }
+
+  @include media-breakpoint-up($max-breakpoint) {
+    @if ($max-font-size-override) {
+      font-size: rem-calc($max-font-size-override);
+    } @else {
+      font-size: $max-font-size-rems;
+    }
+  }
+}
+
+.heading,
+.content .heading {
+  @include font-sans(medium);
+
+  &--small {
+    @include font-sizes(20, 24);
+    margin-bottom: 1rem;
+  }
+
+  &--medium {
+    @include font-sizes(18, 34);
+    line-height: 1.06;
+    letter-spacing: rem-calc(-1.15);
+    margin-bottom: rem-calc(10);
+  }
+
+  &--large {
+    @include font-sizes(35, 60);
+    line-height: 1.2;
+    margin-bottom: rem-calc(24);
+  }
+
+  &--xlarge {
+    @include font-sizes(35, 60, 80);
+    line-height: 1.06;
+    margin-bottom: rem-calc(24);
+  }
+}
+
+.text-danger {
+  color: $red;
+}

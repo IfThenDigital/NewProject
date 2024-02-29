@@ -1,0 +1,14 @@
+{#
+/**
+ * A helper template for outputting a link with variants:
+ * - plain link
+ * - button
+ * - transparent button
+ *
+ */
+#}
+
+<a {{ it_link_href(link_data) }}
+   class="{{ link_data.link_style }}">
+  {{ link_data.link.title }}
+</a>

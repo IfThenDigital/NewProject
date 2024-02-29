@@ -1,0 +1,5 @@
+deploy:
+  dir: deploy
+wordpress:
+  theme:
+    dir: '/web/app/themes/wabe'
